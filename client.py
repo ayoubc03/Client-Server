@@ -19,8 +19,6 @@ def client():
     finally:
         client_socket.close()
 
-
-
 if not server_ip:
     print("Fehler: Server-IP-Adresse ist erforderlich.")
 if not server_port_input:
@@ -29,4 +27,8 @@ if not http_method:
     print("Fehler: HTTP-Methode ist erforderlich.")
 if not message:
     print("Fehler: Nachricht ist erforderlich.")
+
+
+if __name__ == "__main__":
+    client()
 
