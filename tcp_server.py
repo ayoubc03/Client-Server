@@ -11,6 +11,8 @@ while True:
 
     daten = client_socket.recv(1024).decode("utf-8")
 
-    
-    
+    antwort = "Hier ist der TCP-Server"
 
+    client_socket.sendall(antwort)    
+
+tcp_server_socket.close()
