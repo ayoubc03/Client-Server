@@ -3,7 +3,7 @@ import threading
 
 
 load_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-load_socket.bind("localhost", 8892)
+load_socket.bind(("localhost", 8892))
 
 while True:
     load_socket.listen(5)
@@ -11,11 +11,18 @@ while True:
 
     nachricht = client_socket.recv(1024).decode("utf-8")
     new_nach = nachricht.encode("utf-8")
+    try:
+        if "TCP" in nachricht:
+           server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+           server_socket.connect(("localhost" , 8880))
+           server_socket.sendall(new_nach)
 
-    if "TCP" in nachricht:
-        load_socket.connect(8880)
-        load_socket.sendall(new_nach)
+        if "UDP" in nachricht: 
+            server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            server_socket.sendto(new_nach, ("localhost" , 8891))
+            
+    finally:
+        server_socket.close()
 
-    if "UDP" in nachricht: 
-        load_socket.connect(8891)
-        load_socket.sendall(new_nach)
+
+

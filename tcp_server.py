@@ -13,6 +13,6 @@ while True:
 
     antwort = "Hier ist der TCP-Server"
 
-    client_socket.sendall(antwort)    
+    client_socket.sendall(antwort.encode("utf-8"))    
 
 tcp_server_socket.close()
