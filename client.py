@@ -4,7 +4,7 @@ import socket
 
 def tcp_client(server, http_methode, nachricht):
     tcp_client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcp_client_socket.connect(("localhost" , 8880))
+    tcp_client_socket.connect(("localhost" , 8892))
 
     try:
         payload = f"{http_methode} / HTTP/1.1\r\nHost: {server}\r\n\r\n{nachricht}"
@@ -23,7 +23,7 @@ def udp_client(server, http_methode, nachricht):
     payload = f"{http_methode} / HTTP/1.1\r\nHost: {server}\r\n\r\n{nachricht}"
 
     try:
-        udp_socket.sendto(payload.encode("utf-8"), ("localhost", 8891))
+        udp_socket.sendto(payload.encode("utf-8"), ("localhost", 8892))
 
         daten, add = udp_socket.recvfrom(4096)
         antwort = daten.decode("utf-8")
