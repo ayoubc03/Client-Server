@@ -21,12 +21,13 @@ def client_verwaltung(client_socket, addr):
            antwort = server_socket.recv(4096).decode("utf-8")
            client_socket.sendall(antwort.encode("utf-8"))
 
-        if "UDP" in nachricht: 
+        elif "UDP" in nachricht: 
             server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            server_socket.sendto(new_nach, ("localhost" , 8891))
+            server_socket.sendto(new_nach, ("localhost", 8888))  # Zu UDP Server senden
 
-            antwort , _ = server_socket.recvfrom(4096)
-            client_socket.sendall(antwort)
+            antwort, addr = server_socket.recvfrom(4096) # Antwort vom Server
+            client_socket.sendall(antwort) # Zum Client senden
+            server_socket.close()
             
     finally:
         client_socket.close()
@@ -36,8 +37,8 @@ def main ():
         client_socket, addr = load_socket.accept()
         client_handler = threading.Thread(target=client_verwaltung, args= (client_socket, addr))
         client_handler.start()
-
+    
 
 if __name__ == "__main__":
     main()
-
+  
